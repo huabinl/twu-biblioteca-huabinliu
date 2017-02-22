@@ -4,7 +4,7 @@ import java.util.*;
 
 class Library {
     private static List<Book> allAvailableBooks;
-    private List<Book> allBooks;
+    private static List<Book> allBooks;
 
     Library() {
         allBooks = new ArrayList<Book>();
@@ -22,7 +22,9 @@ class Library {
 
     static void listBook() {
         for (Book book : allAvailableBooks) {
-            System.out.println("ID: " + book.getId() + "   Title: " + book.getTitle());
+            String info = "ID: " + book.getId() + " || Title: " + book.getTitle()
+                    + " || Author: " + book.getAuthor() + " || Year published" + book.getYearPublished();
+            System.out.println(info);
         }
     }
 

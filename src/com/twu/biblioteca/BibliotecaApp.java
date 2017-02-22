@@ -5,10 +5,10 @@ import java.util.Scanner;
 public class BibliotecaApp {
 
     public static void main(String[] args) {
-        Library library = new Library();
+        new Library();
         Scanner sc = new Scanner(System.in);
         welcomeMessage();
-        mainMenu(library, sc);
+        mainMenu(sc);
     }
 
     static void welcomeMessage() {
@@ -16,12 +16,11 @@ public class BibliotecaApp {
         System.out.println(welcome);
     }
 
-    static void mainMenu(Library lib, Scanner sc) {
+    private static void mainMenu(Scanner sc) {
         int input = mainMenuInfo(sc);
         while(input != 0) {
             if (input == 1) {
-                lib.listBook();
-
+                Library.listBook();
             } else {
                 System.out.println("Select a valid option!");
             }
@@ -29,11 +28,10 @@ public class BibliotecaApp {
         }
     }
 
-    static int mainMenuInfo(Scanner sc) {
+    private static int mainMenuInfo(Scanner sc) {
         System.out.println("Main Menu: ");
-        System.out.println("List Book (press 1)");
+        System.out.println("List Books (press 1)");
         System.out.println("Quit (press 0)");
         return sc.nextInt();
     }
-
 }

@@ -8,7 +8,7 @@ class Book {
     private int yearPublished;
 
     Book(String title, String author, int yearPublished) {
-        id = counter++;
+        id = ++counter;
         this.title = title;
         this.author = author;
         this.yearPublished = yearPublished;

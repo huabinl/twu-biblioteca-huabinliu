@@ -5,13 +5,13 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class ExampleTest {
-    private BibliotecaApp app = new BibliotecaApp();
 
     @Test
     public void testWelcomeMessage() {
+        new BibliotecaApp();
         final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        app.welcomeMessage();
+        BibliotecaApp.welcomeMessage();
         assertEquals("Hello, welcome to Biblioteca!\n", outContent.toString());
     }
 }
