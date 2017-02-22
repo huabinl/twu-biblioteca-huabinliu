@@ -30,6 +30,9 @@ public class BibliotecaApp {
                 case 3:
                     returnBook(sc);
                     break;
+                case 4:
+                    listMovies();
+                    break;
                 default: System.out.println("Select a valid option!");
             }
             input = mainMenuInfo(sc);
@@ -39,8 +42,9 @@ public class BibliotecaApp {
     private static int mainMenuInfo(Scanner sc) {
         System.out.println("\nMain Menu: ");
         System.out.println("List Books (press 1)");
-        System.out.println("Checkout (press 2)");
-        System.out.println("Return (press 3)");
+        System.out.println("Checkout a book (press 2)");
+        System.out.println("Return a book (press 3)");
+        System.out.println("List Movies (press 4)");
         System.out.println("Quit (press 0)");
         return sc.nextInt();
     }
@@ -49,6 +53,13 @@ public class BibliotecaApp {
         List<String> availableBooksInfo = Library.listBooks();
         for (String bookInfo : availableBooksInfo) {
             System.out.println(bookInfo);
+        }
+    }
+
+    private static void listMovies() {
+        List<String> availableMoviesInfo = Library.listMovies();
+        for (String movieInfo : availableMoviesInfo) {
+            System.out.println(movieInfo);
         }
     }
 

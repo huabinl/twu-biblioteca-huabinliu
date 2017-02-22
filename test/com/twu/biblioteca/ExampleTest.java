@@ -24,7 +24,7 @@ public class ExampleTest {
         assertEquals(7, originSize);
         for (String bookInfo : availableBooksInfo) {
             assertTrue(bookInfo.contains("Author:"));
-            assertTrue(bookInfo.contains("Year published:"));
+            assertTrue(bookInfo.contains("Year:"));
         }
     }
 

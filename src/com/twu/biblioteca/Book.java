@@ -3,41 +3,41 @@ package com.twu.biblioteca;
 class Book {
     private static int counter = 0;
     private final int id;
-    private String title;
+    private String name;
     private String author;
-    private int yearPublished;
-    private boolean available;
+    private int year;
+    private boolean availability;
 
-    Book(String title, String author, int yearPublished) {
+    Book(String name, String author, int year) {
         id = ++counter;
-        this.title = title;
+        this.name = name;
         this.author = author;
-        this.yearPublished = yearPublished;
-        available = true;
-    }
-
-    void setAvailable(boolean bool) {
-        available = bool;
-    }
-
-    boolean getAvailable() {
-        return available;
+        this.year = year;
+        availability = true;
     }
 
     int getId() {
         return id;
     }
 
-    String getTitle() {
-        return title;
+    String getName() {
+        return name;
     }
 
     String getAuthor() {
         return author;
     }
 
-    int getYearPublished() {
-        return yearPublished;
+    int getYear() {
+        return year;
+    }
+
+    void setAvailability(boolean bool) {
+        availability = bool;
+    }
+
+    boolean getAvailability() {
+        return availability;
     }
 
 }
