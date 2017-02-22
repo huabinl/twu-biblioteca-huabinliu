@@ -22,7 +22,7 @@ class Library {
         for (Book book : allBooks) {
             if (book.getAvailable()) {
                 String info = "ID: " + book.getId() + " || Title: " + book.getTitle()
-                        + " || Author: " + book.getAuthor() + " || Year published" + book.getYearPublished();
+                        + " || Author: " + book.getAuthor() + " || Year published: " + book.getYearPublished();
                 availableBooksInfo.add(info);
             }
         }
