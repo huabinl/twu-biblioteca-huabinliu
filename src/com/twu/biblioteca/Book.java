@@ -6,12 +6,22 @@ class Book {
     private String title;
     private String author;
     private int yearPublished;
+    private boolean available;
 
     Book(String title, String author, int yearPublished) {
         id = ++counter;
         this.title = title;
         this.author = author;
         this.yearPublished = yearPublished;
+        available = true;
+    }
+
+    void setAvailable(boolean bool) {
+        available = bool;
+    }
+
+    boolean getAvailable() {
+        return available;
     }
 
     int getId() {
