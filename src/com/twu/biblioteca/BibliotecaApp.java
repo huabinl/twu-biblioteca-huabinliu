@@ -22,16 +22,22 @@ public class BibliotecaApp {
             switch(input)
             {
                 case 1:
-                    listBooks();
+                    listItems("book");
                     break;
                 case 2:
-                    checkoutBook(sc);
+                    checkoutItem(sc, "book");
                     break;
                 case 3:
-                    returnBook(sc);
+                    returnItem(sc, "book");
                     break;
                 case 4:
-                    listMovies();
+                    listItems("movie");
+                    break;
+                case 5:
+                    checkoutItem(sc, "movie");
+                    break;
+                case 6:
+                    returnItem(sc, "movie");
                     break;
                 default: System.out.println("Select a valid option!");
             }
@@ -45,43 +51,38 @@ public class BibliotecaApp {
         System.out.println("Checkout a book (press 2)");
         System.out.println("Return a book (press 3)");
         System.out.println("List Movies (press 4)");
+        System.out.println("Checkout a book (press 5)");
+        System.out.println("Return a book (press 6)");
         System.out.println("Quit (press 0)");
         return sc.nextInt();
     }
 
-    private static void listBooks() {
-        List<String> availableBooksInfo = Library.listBooks();
-        for (String bookInfo : availableBooksInfo) {
-            System.out.println(bookInfo);
+    private static void listItems(String item) {
+        List<String> availableItemsInfo = Library.listItems(item);
+        for (String itemInfo : availableItemsInfo) {
+            System.out.println(itemInfo);
         }
     }
 
-    private static void listMovies() {
-        List<String> availableMoviesInfo = Library.listMovies();
-        for (String movieInfo : availableMoviesInfo) {
-            System.out.println(movieInfo);
-        }
-    }
-
-    private static void checkoutBook(Scanner sc) {
-        System.out.print("Please press the ID of the book to be checked out: ");
+    private static void checkoutItem(Scanner sc, String item) {
+        System.out.print("Please press the ID of the " + item + " to be checked out: ");
         int id = sc.nextInt();
-        boolean state = Library.checkoutABook(id);
+        boolean state = Library.checkoutAItem(id, item);
         if (state) {
-            System.out.println("Thank you! Enjoy the book.");
+            System.out.println("Thank you! Enjoy the " + item + ".");
         } else {
-            System.out.println("That book is not available.");
+            System.out.println("That " + item + " is not available.");
         }
     }
 
-    private static void returnBook(Scanner sc) {
-        System.out.print("Please press the ID of the book to be returned: ");
+    private static void returnItem(Scanner sc, String item) {
+        System.out.print("Please press the ID of the " + item + " to be returned: ");
         int id = sc.nextInt();
-        boolean state = Library.returnABook(id);
+        boolean state = Library.returnAItem(id, item);
         if (state) {
-            System.out.println("Thank you for returning the book.");
+            System.out.println("Thank you for returning the " + item + ".");
         } else {
-            System.out.println("That is not a valid book to return.");
+            System.out.println("That is not a valid " + item + " to return.");
         }
     }
 }

@@ -3,16 +3,16 @@ package com.twu.biblioteca;
 import java.util.*;
 
 class Library {
-    private static List<Book> allBooks;
-    private static List<Movie> allMovies;
-    private static Map<Character, List> itemsMap;
+    private static List<Item> allBooks;
+    private static List<Item> allMovies;
+    private static Map<String, List<Item>> itemsMap;
 
     Library() {
-        allBooks = new ArrayList<Book>();
+        allBooks = new ArrayList<Item>();
         addAllBooks();
-        allMovies = new ArrayList<Movie>();
+        allMovies = new ArrayList<Item>();
         addAllMovies();
-        itemsMap = new HashMap<Character, List>();
+        itemsMap = new HashMap<String, List<Item>>();
         addItemsMap();
     }
 
@@ -36,80 +36,54 @@ class Library {
     }
 
     private void addItemsMap() {
-        itemsMap.put('b', allBooks);
-        itemsMap.put('m', allMovies);
+        itemsMap.put("book", allBooks);
+        itemsMap.put("movie", allMovies);
     }
 
-    static List<String> listBooks() {
-        List<String> availableBooksInfo = new ArrayList<String>();
-        for (Book book : allBooks) {
-            if (book.getAvailability()) {
-                String info = "ID: " + book.getId() + " || Name: " + book.getName()
-                        + " || Year: " + book.getYear() + " || Author: " + book.getAuthor() ;
-                availableBooksInfo.add(info);
+    static List<String> listItems(String itemType) {
+        List<String> availableItemsInfo = new ArrayList<String>();
+        List<Item> allItems = itemsMap.get(itemType);
+        for (Item item : allItems) {
+            if (item.getAvailability()) {
+                String info =  " || Name: " + item.getName() + " || Year: " + item.getYear();
+                if (itemType.equals("book")) {
+                    Book book = (Book)item;
+                    info = "ID: " + book.getId() + info + " || Author: " + book.getAuthor();
+                } else if (itemType.equals("movie")) {
+                    Movie movie = (Movie)item;
+                    String rate = (movie.getRating() == 0) ? "Unrated" : ((Double)movie.getRating()).toString();
+                    info = "ID: " + movie.getId() + info + " || Director(s): "
+                            + movie.getDirector() + " || Rating: " + rate;
+                }
+                availableItemsInfo.add(info);
             }
         }
-        return availableBooksInfo;
+        return availableItemsInfo;
     }
 
-    static List<String> listMovies() {
-        List<String> availableMoviesInfo = new ArrayList<String>();
-        for (Movie movie : allMovies) {
-            if (movie.getAvailability()) {
-                String rate = (movie.getRating() == 0) ? "Unrated" : ((Double)movie.getRating()).toString();
-                String info = "ID: " + movie.getId() + " || Name: " + movie.getName() + " || Year: " + movie.getYear()
-                        + " || Director(s): " + movie.getDirector() + " || Rating: " + rate;
-                availableMoviesInfo.add(info);
-            }
-        }
-        return availableMoviesInfo;
-    }
-
-    static boolean checkoutABook(int id) {
-        if (id < 1 || id > allBooks.size()) {
+    static boolean checkoutAItem(int id, String itemType) {
+        List<Item> allItems = itemsMap.get(itemType);
+        if (id < 1 || id > allItems.size()) {
             return false;
         }
-        Book book = allBooks.get(id - 1);
-        if (!book.getAvailability()) {
+        Item item = allItems.get(id - 1);
+        if (!item.getAvailability()) {
             return false;
         }
-        book.setAvailability(false);
+        item.setAvailability(false);
         return true;
     }
 
-    static boolean checkoutAMovie(int id) {
-        if (id < 1 || id > allMovies.size()) {
+    static boolean returnAItem(int id, String itemType) {
+        List<Item> allItems = itemsMap.get(itemType);
+        if (id < 1 || id > allItems.size()) {
             return false;
         }
-        Movie movie = allMovies.get(id - 1);
-        if (!movie.getAvailability()) {
+        Item item = allItems.get(id - 1);
+        if (item.getAvailability()) {
             return false;
         }
-        movie.setAvailability(false);
-        return true;
-    }
-
-    static boolean returnABook(int id) {
-        if (id < 1 || id > allBooks.size()) {
-            return false;
-        }
-        Book book = allBooks.get(id - 1);
-        if (book.getAvailability()) {
-            return false;
-        }
-        book.setAvailability(true);
-        return true;
-    }
-
-    static boolean returnAMovie(int id) {
-        if (id < 1 || id > allMovies.size()) {
-            return false;
-        }
-        Movie movie = allMovies.get(id - 1);
-        if (movie.getAvailability()) {
-            return false;
-        }
-        movie.setAvailability(true);
+        item.setAvailability(true);
         return true;
     }
 }

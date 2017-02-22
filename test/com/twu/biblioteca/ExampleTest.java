@@ -19,10 +19,11 @@ public class ExampleTest {
     @Test
     public void testListBooks() {
         new Library();
-        List<String> availableBooksInfo = Library.listBooks();
+        List<String> availableBooksInfo = Library.listItems("book");
         int originSize = availableBooksInfo.size();
         assertEquals(7, originSize);
         for (String bookInfo : availableBooksInfo) {
+            assertTrue(bookInfo.contains("Name:"));
             assertTrue(bookInfo.contains("Author:"));
             assertTrue(bookInfo.contains("Year:"));
         }
@@ -31,10 +32,10 @@ public class ExampleTest {
     @Test
     public void testCheckoutABook() {
         new Library();
-        assertTrue(!Library.checkoutABook(-2));
-        assertTrue(!Library.checkoutABook(16));
-        assertTrue(Library.checkoutABook(3));
-        List<String> newAvailableBooksInfo = Library.listBooks();
+        assertTrue(!Library.checkoutAItem(-22, "book"));
+        assertTrue(!Library.checkoutAItem(16, "book"));
+        assertTrue(Library.checkoutAItem(3, "book"));
+        List<String> newAvailableBooksInfo = Library.listItems("book");
         int newSize = newAvailableBooksInfo.size();
         assertEquals(6, newSize);
         boolean noCheckoutBook = true;
@@ -49,9 +50,70 @@ public class ExampleTest {
     @Test
     public void testReturnABook() {
         new Library();
-        assertTrue(!Library.returnABook(-2));
-        assertTrue(!Library.returnABook(16));
-        Library.checkoutABook(3);
-        assertTrue(Library.returnABook(3));
+        assertTrue(!Library.returnAItem(0, "book"));
+        assertTrue(!Library.returnAItem(1024, "book"));
+        Library.checkoutAItem(3, "book");
+        assertTrue(Library.returnAItem(3, "book"));
+        List<String> newAvailableBooksInfo = Library.listItems("book");
+        int newSize = newAvailableBooksInfo.size();
+        assertEquals(7, newSize);
+        boolean hasReturnedBook = false;
+        for (String bookInfo : newAvailableBooksInfo) {
+            if (bookInfo.contains("ID: 3")) {
+                hasReturnedBook = true;
+            }
+        }
+        assertTrue(hasReturnedBook);
+    }
+
+    @Test
+    public void testListMovies() {
+        new Library();
+        List<String> availableMoviesInfo = Library.listItems("movie");
+        int originSize = availableMoviesInfo.size();
+        assertEquals(6, originSize);
+        for (String movieInfo : availableMoviesInfo) {
+            assertTrue(movieInfo.contains("Name:"));
+            assertTrue(movieInfo.contains("Year:"));
+            assertTrue(movieInfo.contains("Director(s):"));
+            assertTrue(movieInfo.contains("Rating:"));
+        }
+    }
+
+    @Test
+    public void testCheckoutAMovie() {
+        new Library();
+        assertTrue(!Library.checkoutAItem(0, "movie"));
+        assertTrue(!Library.checkoutAItem(7, "movie"));
+        assertTrue(Library.checkoutAItem(3, "movie"));
+        List<String> newAvailableMoviesInfo = Library.listItems("movie");
+        int newSize = newAvailableMoviesInfo.size();
+        assertEquals(5, newSize);
+        boolean noCheckoutMovie = true;
+        for (String movieInfo : newAvailableMoviesInfo) {
+            if (movieInfo.contains("ID: 3")) {
+                noCheckoutMovie = false;
+            }
+        }
+        assertTrue(noCheckoutMovie);
+    }
+
+    @Test
+    public void testReturnAMovie() {
+        new Library();
+        assertTrue(!Library.returnAItem(-11, "movie"));
+        assertTrue(!Library.returnAItem(666, "movie"));
+        Library.checkoutAItem(3, "movie");
+        assertTrue(Library.returnAItem(3, "movie"));
+        List<String> newAvailableMoviesInfo = Library.listItems("movie");
+        int newSize = newAvailableMoviesInfo.size();
+        assertEquals(6, newSize);
+        boolean hasReturnedMovie = false;
+        for (String movieInfo : newAvailableMoviesInfo) {
+            if (movieInfo.contains("ID: 3")) {
+                hasReturnedMovie = true;
+            }
+        }
+        assertTrue(hasReturnedMovie);
     }
 }
