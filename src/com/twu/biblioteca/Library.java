@@ -51,21 +51,20 @@ class Library {
 
     static String getProfile(int userId) {
         UserAccount user = allUsers.get(userId - 1);
-        StringBuilder profile = new StringBuilder();
-        profile.append("Name: " + user.getName() + " || Email: " + user.getEmail() + " || Phone: " + user.getPhone() + "\n");
+        String profile = "Name: " + user.getName() + " || Email: " + user.getEmail() + " || Phone: " + user.getPhone() + "\n";
         if (!user.getBooksIdCheckedOut().isEmpty()) {
-            profile.append("Book checked out: \n");
+            profile += "Book checked out: \n";
             for (int id : user.getBooksIdCheckedOut()) {
-                profile.append("    " + allBooks.get(id - 1).getName() + " (ID: " + id + ")\n");
+                profile += "    " + allBooks.get(id - 1).getName() + " (ID: " + id + ")\n";
             }
         }
         if (!user.getMoviesIdCheckedOut().isEmpty()) {
-            profile.append("Movie checked out: \n");
+            profile += "Movie checked out: \n";
             for (int id : user.getMoviesIdCheckedOut()) {
-                profile.append("    " + allMovies.get(id - 1).getName() + " (ID: " + id + ")\n");
+                profile += "    " + allMovies.get(id - 1).getName() + " (ID: " + id + ")\n";
             }
         }
-        return profile.toString();
+        return profile;
     }
 
     static List<String> listItems(String itemType) {
