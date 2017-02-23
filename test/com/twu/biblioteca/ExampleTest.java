@@ -32,9 +32,9 @@ public class ExampleTest {
     @Test
     public void testCheckoutABook() {
         new Library();
-        assertTrue(!Library.checkoutAItem(-22, "book"));
-        assertTrue(!Library.checkoutAItem(16, "book"));
-        assertTrue(Library.checkoutAItem(3, "book"));
+        assertTrue(!Library.checkoutAItem(-22, "book", 1));
+        assertTrue(!Library.checkoutAItem(16, "book", 1));
+        assertTrue(Library.checkoutAItem(3, "book", 1));
         List<String> newAvailableBooksInfo = Library.listItems("book");
         int newSize = newAvailableBooksInfo.size();
         assertEquals(6, newSize);
@@ -50,10 +50,10 @@ public class ExampleTest {
     @Test
     public void testReturnABook() {
         new Library();
-        assertTrue(!Library.returnAItem(0, "book"));
-        assertTrue(!Library.returnAItem(1024, "book"));
-        Library.checkoutAItem(3, "book");
-        assertTrue(Library.returnAItem(3, "book"));
+        assertTrue(!Library.returnAItem(0, "book", 1));
+        assertTrue(!Library.returnAItem(1024, "book", 1));
+        Library.checkoutAItem(3, "book", 1);
+        assertTrue(Library.returnAItem(3, "book", 1));
         List<String> newAvailableBooksInfo = Library.listItems("book");
         int newSize = newAvailableBooksInfo.size();
         assertEquals(7, newSize);
@@ -83,9 +83,9 @@ public class ExampleTest {
     @Test
     public void testCheckoutAMovie() {
         new Library();
-        assertTrue(!Library.checkoutAItem(0, "movie"));
-        assertTrue(!Library.checkoutAItem(7, "movie"));
-        assertTrue(Library.checkoutAItem(3, "movie"));
+        assertTrue(!Library.checkoutAItem(0, "movie", 1));
+        assertTrue(!Library.checkoutAItem(7, "movie", 1));
+        assertTrue(Library.checkoutAItem(3, "movie", 1));
         List<String> newAvailableMoviesInfo = Library.listItems("movie");
         int newSize = newAvailableMoviesInfo.size();
         assertEquals(5, newSize);
@@ -101,10 +101,10 @@ public class ExampleTest {
     @Test
     public void testReturnAMovie() {
         new Library();
-        assertTrue(!Library.returnAItem(-11, "movie"));
-        assertTrue(!Library.returnAItem(666, "movie"));
-        Library.checkoutAItem(3, "movie");
-        assertTrue(Library.returnAItem(3, "movie"));
+        assertTrue(!Library.returnAItem(-11, "movie", 1));
+        assertTrue(!Library.returnAItem(666, "movie", 1));
+        Library.checkoutAItem(3, "movie", 1);
+        assertTrue(Library.returnAItem(3, "movie", 1));
         List<String> newAvailableMoviesInfo = Library.listItems("movie");
         int newSize = newAvailableMoviesInfo.size();
         assertEquals(6, newSize);
