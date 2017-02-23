@@ -55,13 +55,13 @@ class Library {
         if (!user.getBooksIdCheckedOut().isEmpty()) {
             profile += "Book checked out: \n";
             for (int id : user.getBooksIdCheckedOut()) {
-                profile += "    " + allBooks.get(id - 1).getName() + " (ID: " + id + ")\n";
+                profile += "    " + getBook(id).getName() + " (ID: " + id + ")\n";
             }
         }
         if (!user.getMoviesIdCheckedOut().isEmpty()) {
             profile += "Movie checked out: \n";
             for (int id : user.getMoviesIdCheckedOut()) {
-                profile += "    " + allMovies.get(id - 1).getName() + " (ID: " + id + ")\n";
+                profile += "    " + getMovie(id).getName() + " (ID: " + id + ")\n";
             }
         }
         return profile;
@@ -125,5 +125,8 @@ class Library {
         }
         return true;
     }
+
+    static Book getBook(int id) {return (Book) allBooks.get(id - 1);}
+    static Movie getMovie(int id) {return (Movie) allMovies.get(id - 1);}
 }
 

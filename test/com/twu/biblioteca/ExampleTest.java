@@ -33,40 +33,26 @@ public class ExampleTest {
     public void testCheckoutABook() {
         new Library();
         int originSize = Library.listItems("book").size();
+        assertTrue(Library.getBook(3).getAvailability());
         assertTrue(!Library.checkoutAItem(-1, "book", 1));
         assertTrue(!Library.checkoutAItem(8, "book", 1));
         assertTrue(Library.checkoutAItem(3, "book", 1));
-        List<String> newAvailableBooksInfo = Library.listItems("book");
-        int newSize = newAvailableBooksInfo.size();
-        assertEquals(1, originSize - newSize);
-        boolean noCheckoutBook = true;
-        for (String bookInfo : newAvailableBooksInfo) {
-            if (bookInfo.contains("ID: 3 ")) {
-                noCheckoutBook = false;
-            }
-        }
-        assertTrue(noCheckoutBook);
+        int checkoutSize = Library.listItems("book").size();
+        assertEquals(1, originSize - checkoutSize);
+        assertTrue(!Library.getBook(3).getAvailability());
     }
 
     @Test
     public void testReturnABook() {
         new Library();
-
         assertTrue(!Library.returnAItem(0, "book", 1));
         assertTrue(!Library.returnAItem(1024, "book", 1));
         Library.checkoutAItem(3, "book", 1);
-        int originSize = Library.listItems("book").size();
+        int checkoutSize = Library.listItems("book").size();
         assertTrue(Library.returnAItem(3, "book", 1));
-        List<String> newAvailableBooksInfo = Library.listItems("book");
-        int newSize = newAvailableBooksInfo.size();
-        assertEquals(1, newSize - originSize);
-        boolean hasReturnedBook = false;
-        for (String bookInfo : newAvailableBooksInfo) {
-            if (bookInfo.contains("ID: 3 ")) {
-                hasReturnedBook = true;
-            }
-        }
-        assertTrue(hasReturnedBook);
+        int returnSize = Library.listItems("book").size();
+        assertEquals(1, returnSize - checkoutSize);
+        assertTrue(Library.getBook(3).getAvailability());
     }
 
     @Test
@@ -87,19 +73,13 @@ public class ExampleTest {
     public void testCheckoutAMovie() {
         new Library();
         int originSize = Library.listItems("movie").size();
+        assertTrue(Library.getMovie(6).getAvailability());
         assertTrue(!Library.checkoutAItem(0, "movie", 1));
         assertTrue(!Library.checkoutAItem(7, "movie", 1));
-        assertTrue(Library.checkoutAItem(3, "movie", 1));
-        List<String> newAvailableMoviesInfo = Library.listItems("movie");
-        int newSize = newAvailableMoviesInfo.size();
-        assertEquals(1, originSize - newSize);
-        boolean noCheckoutMovie = true;
-        for (String movieInfo : newAvailableMoviesInfo) {
-            if (movieInfo.contains("ID: 3 ")) {
-                noCheckoutMovie = false;
-            }
-        }
-        assertTrue(noCheckoutMovie);
+        assertTrue(Library.checkoutAItem(6, "movie", 1));
+        int checkoutSize = Library.listItems("movie").size();
+        assertEquals(1, originSize - checkoutSize);
+        assertTrue(!Library.getMovie(6).getAvailability());
     }
 
     @Test
@@ -107,19 +87,12 @@ public class ExampleTest {
         new Library();
         assertTrue(!Library.returnAItem(-11, "movie", 1));
         assertTrue(!Library.returnAItem(666, "movie", 1));
-        Library.checkoutAItem(3, "movie", 1);
-        int originSize = Library.listItems("movie").size();
-        assertTrue(Library.returnAItem(3, "movie", 1));
-        List<String> newAvailableMoviesInfo = Library.listItems("movie");
-        int newSize = newAvailableMoviesInfo.size();
-        assertEquals(1, newSize - originSize);
-        boolean hasReturnedMovie = false;
-        for (String movieInfo : newAvailableMoviesInfo) {
-            if (movieInfo.contains("ID: 3 ")) {
-                hasReturnedMovie = true;
-            }
-        }
-        assertTrue(hasReturnedMovie);
+        Library.checkoutAItem(6, "movie", 1);
+        int checkoutSize = Library.listItems("movie").size();
+        assertTrue(Library.returnAItem(6, "movie", 1));
+        int returnSize = Library.listItems("movie").size();
+        assertEquals(1, returnSize - checkoutSize);
+        assertTrue(Library.getBook(6).getAvailability());
     }
 
     @Test
