@@ -32,15 +32,16 @@ public class ExampleTest {
     @Test
     public void testCheckoutABook() {
         new Library();
-        assertTrue(!Library.checkoutAItem(-22, "book", 1));
-        assertTrue(!Library.checkoutAItem(16, "book", 1));
+        int originSize = Library.listItems("book").size();
+        assertTrue(!Library.checkoutAItem(-1, "book", 1));
+        assertTrue(!Library.checkoutAItem(8, "book", 1));
         assertTrue(Library.checkoutAItem(3, "book", 1));
         List<String> newAvailableBooksInfo = Library.listItems("book");
         int newSize = newAvailableBooksInfo.size();
-        assertEquals(6, newSize);
+        assertEquals(1, originSize - newSize);
         boolean noCheckoutBook = true;
         for (String bookInfo : newAvailableBooksInfo) {
-            if (bookInfo.contains("ID: 3")) {
+            if (bookInfo.contains("ID: 3 ")) {
                 noCheckoutBook = false;
             }
         }
@@ -50,16 +51,18 @@ public class ExampleTest {
     @Test
     public void testReturnABook() {
         new Library();
+
         assertTrue(!Library.returnAItem(0, "book", 1));
         assertTrue(!Library.returnAItem(1024, "book", 1));
         Library.checkoutAItem(3, "book", 1);
+        int originSize = Library.listItems("book").size();
         assertTrue(Library.returnAItem(3, "book", 1));
         List<String> newAvailableBooksInfo = Library.listItems("book");
         int newSize = newAvailableBooksInfo.size();
-        assertEquals(7, newSize);
+        assertEquals(1, newSize - originSize);
         boolean hasReturnedBook = false;
         for (String bookInfo : newAvailableBooksInfo) {
-            if (bookInfo.contains("ID: 3")) {
+            if (bookInfo.contains("ID: 3 ")) {
                 hasReturnedBook = true;
             }
         }
@@ -83,15 +86,16 @@ public class ExampleTest {
     @Test
     public void testCheckoutAMovie() {
         new Library();
+        int originSize = Library.listItems("movie").size();
         assertTrue(!Library.checkoutAItem(0, "movie", 1));
         assertTrue(!Library.checkoutAItem(7, "movie", 1));
         assertTrue(Library.checkoutAItem(3, "movie", 1));
         List<String> newAvailableMoviesInfo = Library.listItems("movie");
         int newSize = newAvailableMoviesInfo.size();
-        assertEquals(5, newSize);
+        assertEquals(1, originSize - newSize);
         boolean noCheckoutMovie = true;
         for (String movieInfo : newAvailableMoviesInfo) {
-            if (movieInfo.contains("ID: 3")) {
+            if (movieInfo.contains("ID: 3 ")) {
                 noCheckoutMovie = false;
             }
         }
@@ -104,16 +108,35 @@ public class ExampleTest {
         assertTrue(!Library.returnAItem(-11, "movie", 1));
         assertTrue(!Library.returnAItem(666, "movie", 1));
         Library.checkoutAItem(3, "movie", 1);
+        int originSize = Library.listItems("movie").size();
         assertTrue(Library.returnAItem(3, "movie", 1));
         List<String> newAvailableMoviesInfo = Library.listItems("movie");
         int newSize = newAvailableMoviesInfo.size();
-        assertEquals(6, newSize);
+        assertEquals(1, newSize - originSize);
         boolean hasReturnedMovie = false;
         for (String movieInfo : newAvailableMoviesInfo) {
-            if (movieInfo.contains("ID: 3")) {
+            if (movieInfo.contains("ID: 3 ")) {
                 hasReturnedMovie = true;
             }
         }
         assertTrue(hasReturnedMovie);
     }
+
+    @Test
+    public void testLogin() {
+        new Library();
+        UserAccount user = new UserAccount();
+        assertEquals(2, user.login("222-2222", "321"));
+        assertEquals(0, user.login("222-2222", "123"));
+    }
+
+    @Test
+    public void testGetProfile() {
+        new Library();
+        String profile = Library.getProfile(1);
+        assertTrue(profile.contains("Name:"));
+        assertTrue(profile.contains("Email:"));
+        assertTrue(profile.contains("Phone:"));
+    }
+
 }
