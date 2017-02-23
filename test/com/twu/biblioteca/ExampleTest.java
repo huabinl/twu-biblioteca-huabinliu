@@ -101,6 +101,7 @@ public class ExampleTest {
         UserAccount user = new UserAccount();
         assertEquals(2, user.login("222-2222", "321"));
         assertEquals(0, user.login("222-2222", "123"));
+        assertEquals(0, user.login("222-222", "321"));
     }
 
     @Test

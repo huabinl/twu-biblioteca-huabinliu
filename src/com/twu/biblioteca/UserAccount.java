@@ -29,7 +29,7 @@ class UserAccount {
     }
 
     int login(String libNum, String password) {
-        if (loginInfo.get(libNum).equals(password)) {
+        if (loginInfo.containsKey(libNum) && loginInfo.get(libNum).equals(password)) {
             return libNumId.get(libNum);
         }
         return id;
