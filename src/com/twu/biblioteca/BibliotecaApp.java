@@ -8,7 +8,9 @@ public class BibliotecaApp {
 
     public static void main(String[] args) {
         userId = 0;
-        new Library();
+        new BookLibrary();
+        new MovieLibrary();
+        new UserCenter();
         sc = new Scanner(System.in);
         welcomeMessage();
         mainMenu();
@@ -25,22 +27,22 @@ public class BibliotecaApp {
             switch(input)
             {
                 case 1:
-                    listItems("book");
+                    listBooks();
                     break;
                 case 2:
-                    checkoutItem("book");
+                    checkoutBook();
                     break;
                 case 3:
-                    returnItem("book");
+                    returnBook();
                     break;
                 case 4:
-                    listItems("movie");
+                    listMovies();
                     break;
                 case 5:
-                    checkoutItem("movie");
+                    checkoutMovie();
                     break;
                 case 6:
-                    returnItem("movie");
+                    returnMovie();
                     break;
                 case 7:
                     loginUser();
@@ -92,39 +94,72 @@ public class BibliotecaApp {
 
     private static void showProfile() {
         if (isLogedIn()) {
-            System.out.print(Library.getProfile(userId));
+            System.out.print(UserCenter.getProfile(userId));
         }
     }
 
-    private static void listItems(String item) {
-        List<String> availableItemsInfo = Library.listItems(item);
-        for (String itemInfo : availableItemsInfo) {
-            System.out.println(itemInfo);
+    private static void listBooks() {
+        List<String> availableBooksInfo = BookLibrary.listBooks();
+        for (String bookInfo : availableBooksInfo) {
+            System.out.println(bookInfo);
         }
     }
 
-    private static void checkoutItem(String item) {
+    private static void checkoutBook() {
         if (isLogedIn()) {
-            System.out.print("Please press the ID of the " + item + " to be checked out: ");
-            int id = sc.nextInt();
-            boolean state = Library.checkoutAItem(id, item, userId);
+            System.out.print("Please press the ID of the book to be checked out: ");
+            int bookId = sc.nextInt();
+            boolean state = BookLibrary.checkoutABook(bookId, userId);
             if (state) {
-                System.out.println("Thank you! Enjoy the " + item + ".");
+                System.out.println("Thank you! Enjoy the book.");
             } else {
-                System.out.println("That " + item + " is not available.");
+                System.out.println("That book is not available.");
             }
         }
     }
 
-    private static void returnItem(String item) {
+    private static void returnBook() {
         if (isLogedIn()) {
-            System.out.print("Please press the ID of the " + item + " to be returned: ");
-            int id = sc.nextInt();
-            boolean state = Library.returnAItem(id, item, userId);
+            System.out.print("Please press the ID of the book to be returned: ");
+            int bookId = sc.nextInt();
+            boolean state = BookLibrary.returnABook(bookId, userId);
             if (state) {
-                System.out.println("Thank you for returning the " + item + ".");
+                System.out.println("Thank you for returning the book.");
             } else {
-                System.out.println("That is not a valid " + item + " to return.");
+                System.out.println("That is not a valid book to return.");
+            }
+        }
+    }
+
+    private static void listMovies() {
+        List<String> availableMoviesInfo = MovieLibrary.listMovies();
+        for (String movieInfo : availableMoviesInfo) {
+            System.out.println(movieInfo);
+        }
+    }
+
+    private static void checkoutMovie() {
+        if (isLogedIn()) {
+            System.out.print("Please press the ID of the movie to be checked out: ");
+            int movieId = sc.nextInt();
+            boolean state = MovieLibrary.checkoutAMovie(movieId, userId);
+            if (state) {
+                System.out.println("Thank you! Enjoy the movie.");
+            } else {
+                System.out.println("That movie is not available.");
+            }
+        }
+    }
+
+    private static void returnMovie() {
+        if (isLogedIn()) {
+            System.out.print("Please press the ID of the movie to be returned: ");
+            int movieId = sc.nextInt();
+            boolean state = MovieLibrary.returnAMovie(movieId, userId);
+            if (state) {
+                System.out.println("Thank you for returning the movie.");
+            } else {
+                System.out.println("That is not a valid movie to return.");
             }
         }
     }
